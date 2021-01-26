@@ -3,6 +3,7 @@ Just-in-Time Handler for Salesforce
 
 ## Maps these Fields
 Assertion attributes | Description | Contact  | User | SAML Attribute
+------------ | ------------- | ------------ | ------------- | ------------ 
 affiliation | eduPerson affiliation |  |  | 
 email | email (uwEWPEmail1 or uwSWPEmail or id@uw.edu) | Personal_Email__c |  | urn:oid:0.9.2342.19200300.100.1.3
 employeeNumber | Employee id (PDS: uwEmployeeID) | Employee_ID__c | EmployeeNumber | urn:oid:2.16.840.1.113730.3.1.3
