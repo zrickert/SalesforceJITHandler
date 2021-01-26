@@ -330,6 +330,10 @@ global class JITHandler_UW implements Auth.SamlJitHandler {
 		
         if(attributes.containsKey('Contact.Email')) {
 			c.hed__UniversityEmail__c = attributes.get('Contact.Email');
+            //c.hed__Preferred_Email__c = 'University'; Add later on.
+		}
+        if(attributes.containsKey('Contact.Personal_Email__c')) {
+			c.Personal_Email__c = attributes.get('Contact.Personal_Email__c');
 		}
         if(attributes.containsKey('Contact.Student_Number__c')) {
         	system.debug('***Student Number in if statement in attributes: ' + attributes.get('Contact.Student_Number__c'));
@@ -531,31 +535,31 @@ global class JITHandler_UW implements Auth.SamlJitHandler {
              		uw_attributes.put('User.ProfileId',String.valueOf(profileLookup.Id));
                 }
                  
-            // Adding the Last/sur name(urn:oid:2.5.4.4) or Preferred Last Name (urn:oid:1.2.840.113994.200.49) to User & Contact
+            // Preferred Last Name (urn:oid:1.2.840.113994.200.49) to User & Contact
             if(attributes.containsKey('urn:oid:1.2.840.113994.200.49') ){
-            	uw_attributes.put('User.LastName', attributes.get('urn:oid:1.2.840.113994.200.49'));
-            	uw_attributes.put('Contact.LastName', attributes.get('urn:oid:1.2.840.113994.200.49'));
                 uw_attributes.put('Contact.Preferred_Last_Name__c', attributes.get('urn:oid:1.2.840.113994.200.49'));
                 uw_attributes.put('User.preferredSurname__c', attributes.get('urn:oid:1.2.840.113994.200.49'));
-            } 	else{
-                    if(attributes.containsKey('urn:oid:2.5.4.4') ){
-                        uw_attributes.put('User.LastName', attributes.get('urn:oid:2.5.4.4'));
-                        uw_attributes.put('Contact.LastName', attributes.get('urn:oid:2.5.4.4'));
-                		} 
-               		 }
+            }
+
+            //Registered Sur Last Name (urn:oid:1.2.840.113994.200.31) to User & Contact
+            if(attributes.containsKey('urn:oid:1.2.840.113994.200.31') ){
+                uw_attributes.put('Contact.LastName', attributes.get('urn:oid:1.2.840.113994.200.31'));
+                uw_attributes.put('User.LastName', attributes.get('urn:oid:1.2.840.113994.200.31'));
+            }
             
-            // Adding the First/Given name(urn:oid:2.5.4.42) or Preferred First Name (urn:oid:1.2.840.113994.200.47)to User & Contact
+            // Preferred First Name (urn:oid:1.2.840.113994.200.47)to User & Contact
             if(attributes.containsKey('urn:oid:1.2.840.113994.200.47') ){
-            	uw_attributes.put('User.FirstName', attributes.get('urn:oid:1.2.840.113994.200.47'));
-            	uw_attributes.put('Contact.FirstName', attributes.get('urn:oid:1.2.840.113994.200.47'));
                 uw_attributes.put('User.preferredFirst__c', attributes.get('urn:oid:1.2.840.113994.200.47'));
             	uw_attributes.put('Contact.Preferred_First_Name__c', attributes.get('urn:oid:1.2.840.113994.200.47')); 
-            } else{
-                    if(attributes.containsKey('urn:oid:2.5.4.42') ){
-                        uw_attributes.put('User.FirstName', attributes.get('urn:oid:2.5.4.42'));
-                        uw_attributes.put('Contact.FirstName', attributes.get('urn:oid:2.5.4.42'));
-                		} 
-               		 }
+            }
+
+            //Registered Given Name (urn:oid:1.2.840.113994.200.32) to User & Contact
+            if(attributes.containsKey('urn:oid:1.2.840.113994.200.32') ){
+                uw_attributes.put('Contact.FirstName', attributes.get('urn:oid:1.2.840.113994.200.32'));
+                uw_attributes.put('User.FirstName', attributes.get('urn:oid:1.2.840.113994.200.32'));
+            }
+
+
             // Adding the Preferred Middle Name (urn:oid:1.2.840.113994.200.48)to User & Contact
             if(attributes.containsKey('urn:oid:1.2.840.113994.200.48') ){
                 uw_attributes.put('User.preferredMiddle__c', attributes.get('urn:oid:1.2.840.113994.200.48'));
