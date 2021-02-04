@@ -233,6 +233,7 @@ global class JITHandler_UW implements Auth.SamlJitHandler {
 		}
 		if(attributes.containsKey('Contact.FirstName')) {
 			c.FirstName = attributes.get('Contact.FirstName');
+			c.MiddleName = '';
 		}
 		if(attributes.containsKey('Contact.LastName')) {
 			c.LastName = attributes.get('Contact.LastName');
@@ -330,7 +331,7 @@ global class JITHandler_UW implements Auth.SamlJitHandler {
 		
         if(attributes.containsKey('Contact.Email')) {
 			c.hed__UniversityEmail__c = attributes.get('Contact.Email');
-            //c.hed__Preferred_Email__c = 'University'; Add later on.
+            c.hed__Preferred_Email__c = 'University'; 
 		}
         if(attributes.containsKey('Contact.Personal_Email__c')) {
 			c.Personal_Email__c = attributes.get('Contact.Personal_Email__c');
@@ -372,7 +373,9 @@ global class JITHandler_UW implements Auth.SamlJitHandler {
             Database.insert(c, dml);
 			u.ContactId = c.Id;
 		} else {
-			update(c);
+			Database.DMLOptions dml = new Database.DMLOptions();
+			dml.DuplicateRuleHeader.AllowSave = true; 
+			Database.update(c, dml);
             system.debug('***Update Contact: ' + c);
             //u.ContactId = c.Id;
 		}
