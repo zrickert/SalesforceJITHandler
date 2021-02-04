@@ -373,7 +373,9 @@ global class JITHandler_UW implements Auth.SamlJitHandler {
             Database.insert(c, dml);
 			u.ContactId = c.Id;
 		} else {
-			update(c);
+			Database.DMLOptions dml = new Database.DMLOptions();
+			dml.DuplicateRuleHeader.AllowSave = true; 
+			Database.update(c, dml);
             system.debug('***Update Contact: ' + c);
             //u.ContactId = c.Id;
 		}
